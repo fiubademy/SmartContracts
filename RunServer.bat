@@ -1,0 +1,1 @@
+docker run -i -p 8010:8010 smart-contracts-service

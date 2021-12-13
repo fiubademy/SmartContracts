@@ -1,16 +1,17 @@
 const ethers = require("ethers");
 const getDepositHandler = require("../handlers/getDepositHandler");
+const dbClient = require("../database.js").db;
 
 const getContract = (config, wallet) => {
   return new ethers.Contract(config.contractAddress, config.contractAbi, wallet);
 };
 
-const deposits = {};
+//const deposits = {};
 
 const deposit = ({ config }) => async (senderWallet, amountToSend) => {
-  const basicPayments = await getContract(config, senderWallet);
+  const basicPayments = getContract(config, senderWallet);
   const tx = await basicPayments.deposit({
-    value: await ethers.utils.parseEther(amountToSend).toHexString(),
+    value: ethers.utils.parseEther(amountToSend).toHexString(),
   });
   tx.wait(1).then(
     receipt => {
@@ -18,10 +19,15 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
       const firstEvent = receipt && receipt.events && receipt.events[0];
       console.log(firstEvent);
       if (firstEvent && firstEvent.event == "DepositMade") {
-        deposits[tx.hash] = {
+        dbClient.db().collection("deposits").insertOne({
+          _id: tx.hash,
           senderAddress: firstEvent.args.sender,
           amountSent: firstEvent.args.amount,
-        };
+        });
+        /*deposits[tx.hash] = {
+          senderAddress: firstEvent.args.sender,
+          amountSent: firstEvent.args.amount,
+        };*/
       } else {
         console.error(`Payment not created in tx ${tx.hash}`);
       }
@@ -39,8 +45,9 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
   return tx;
 };
 
-const getDepositReceipt = ({}) => async depositTxHash => {
-  return deposits[depositTxHash];
+const getDepositReceipt = ({}) => depositTxHash => {
+  return dbClient.db().collection("deposits").findOne({_id: depositTxHash});
+  //return deposits[depositTxHash];
 };
 
 module.exports = dependencies => ({
