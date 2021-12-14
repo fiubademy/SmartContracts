@@ -1,13 +1,13 @@
 function schema() {
   return {
-    params: {
+    body: {
       type: "object",
       properties: {
         senderId: {
-          type: "integer",
+          type: "string",
         },
         amountInEthers: {
-          type: "string",
+          type: "number",
         },
       },
     },
@@ -17,7 +17,10 @@ function schema() {
 
 function handler({ contractInteraction, walletService }) {
   return async function (req) {
-    return contractInteraction.deposit(walletService.getWallet(req.body.senderId), req.body.amountInEthers);
+    return contractInteraction.deposit(
+      await walletService.getWallet(req.body.senderId),
+      req.body.amountInEthers.toString(),
+    );
   };
 }
 

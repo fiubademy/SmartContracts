@@ -5,9 +5,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fastify-swagger": "^4.12.6",
     "hardhat": "2.0.6",
     "hardhat-deploy": "0.7.4",
     "hardhat-deploy-ethers": "0.3.0-beta.7",
+    "mongodb": "^4.2.2",
     "solc": "0.7.4"
   },
   "devDependencies": {
@@ -44,7 +46,7 @@
     "hardhat-typechain": "0.3.4",
     "husky": "5.0.9",
     "leafleth": "0.0.9",
-    "prettier": "2.2.1",
+    "prettier": "^2.2.1",
     "prettier-plugin-solidity": "1.0.0-beta.5",
     "shelljs": "0.8.4",
     "solhint": "3.3.2",

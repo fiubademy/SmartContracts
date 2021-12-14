@@ -1,5 +1,6 @@
 const ethers = require("ethers");
 const accounts = [];
+const dbClient = require("../database.js").db;
 
 const getDeployerWallet = ({ config }) => () => {
   const provider = new ethers.providers.InfuraProvider(config.network, config.infuraApiKey);
@@ -8,16 +9,21 @@ const getDeployerWallet = ({ config }) => () => {
   return wallet;
 };
 
-const createWallet = () => async () => {
+const createWallet = () => async user_id => {
   const provider = new ethers.providers.InfuraProvider("kovan", process.env.INFURA_API_KEY);
   // This may break in some environments, keep an eye on it
   const wallet = ethers.Wallet.createRandom().connect(provider);
-  accounts.push({
+  await dbClient.db().collection("accounts").insertOne({
+    _id: user_id,
     address: wallet.address,
     privateKey: wallet.privateKey,
   });
+  /*accounts.push({
+          address: wallet.address,
+          privateKey: wallet.privateKey,
+        });*/
   const result = {
-    id: accounts.length,
+    id: user_id, //accounts.length,
     address: wallet.address,
     privateKey: wallet.privateKey,
   };
@@ -25,17 +31,19 @@ const createWallet = () => async () => {
 };
 
 const getWalletsData = () => () => {
-  return accounts;
+  return dbClient.db().collection("accounts").find().toArray();
 };
 
 const getWalletData = () => index => {
-  return accounts[index - 1];
+  return dbClient.db().collection("accounts").findOne({ _id: index });
+  //return accounts[index - 1];
 };
 
-const getWallet = ({}) => index => {
-  const provider = new ethers.providers.InfuraProvider("kovan", process.env.INFURA_API_KEY);
-
-  return new ethers.Wallet(accounts[index - 1].privateKey, provider);
+const getWallet = ({}) => async index => {
+  const provider = await new ethers.providers.InfuraProvider("kovan", process.env.INFURA_API_KEY);
+  let privateKey = await dbClient.db().collection("accounts").findOne({ _id: index }, { privateKey: 1, _id: 0 });
+  privateKey = privateKey.privateKey;
+  return new ethers.Wallet(privateKey, provider);
 };
 
 module.exports = ({ config }) => ({
