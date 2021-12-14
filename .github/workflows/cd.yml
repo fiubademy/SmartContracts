@@ -31,6 +31,6 @@ jobs:
       - run: npm install
       - name: Deploy
         env:
-          INFURA_API_KEY: 'd4b8b53a70364ca580fee79951daade7'
-          MNEMONIC: 'subway orphan coach salad bottom when wish news grid boss hybrid obscure'
+          INFURA_API_KEY: ${{secrets.INFURA_API_KEY}}
+          MNEMONIC: ${{secrets.MNEMONIC}}
         run: npm run deploy-kovan
