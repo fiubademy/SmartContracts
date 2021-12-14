@@ -90,5 +90,8 @@
     "deploy-local": "hardhat deploy --network hardhat",
     "start": "node src/server",
     "release": "standard-version"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
