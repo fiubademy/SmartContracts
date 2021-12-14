@@ -9,7 +9,7 @@ const getDeployerWallet = ({ config }) => () => {
   return wallet;
 };
 
-const createWallet = () => async (user_id) => {
+const createWallet = () => async user_id => {
   const provider = new ethers.providers.InfuraProvider("kovan", process.env.INFURA_API_KEY);
   // This may break in some environments, keep an eye on it
   const wallet = ethers.Wallet.createRandom().connect(provider);
@@ -19,11 +19,11 @@ const createWallet = () => async (user_id) => {
     privateKey: wallet.privateKey,
   });
   /*accounts.push({
-    address: wallet.address,
-    privateKey: wallet.privateKey,
-  });*/
+          address: wallet.address,
+          privateKey: wallet.privateKey,
+        });*/
   const result = {
-    id: user_id,//accounts.length,
+    id: user_id, //accounts.length,
     address: wallet.address,
     privateKey: wallet.privateKey,
   };
@@ -34,14 +34,14 @@ const getWalletsData = () => () => {
   return dbClient.db().collection("accounts").find().toArray();
 };
 
-const getWalletData = () => index => { 
-  return dbClient.db().collection("accounts").findOne({_id: index});
+const getWalletData = () => index => {
+  return dbClient.db().collection("accounts").findOne({ _id: index });
   //return accounts[index - 1];
 };
 
 const getWallet = ({}) => async index => {
   const provider = await new ethers.providers.InfuraProvider("kovan", process.env.INFURA_API_KEY);
-  let privateKey = await dbClient.db().collection("accounts").findOne({_id: index}, {privateKey:1, _id:0});
+  let privateKey = await dbClient.db().collection("accounts").findOne({ _id: index }, { privateKey: 1, _id: 0 });
   privateKey = privateKey.privateKey;
   return new ethers.Wallet(privateKey, provider);
 };

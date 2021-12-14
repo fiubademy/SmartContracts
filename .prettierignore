@@ -10,10 +10,13 @@ typechain/
 profiles/
 docs/
 .gitlab/
+.github/
 .vscode/
 
 # files
 coverage.json
+package-lock.json
+package.json
 tsconfig.json
 README.md
 CONTRIBUTING.md

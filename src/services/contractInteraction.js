@@ -25,9 +25,9 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
           amountSent: firstEvent.args.amount,
         });
         /*deposits[tx.hash] = {
-          senderAddress: firstEvent.args.sender,
-          amountSent: firstEvent.args.amount,
-        };*/
+                                  senderAddress: firstEvent.args.sender,
+                                  amountSent: firstEvent.args.amount,
+                                };*/
       } else {
         console.error(`Payment not created in tx ${tx.hash}`);
       }
@@ -46,7 +46,7 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
 };
 
 const getDepositReceipt = ({}) => depositTxHash => {
-  return dbClient.db().collection("deposits").findOne({_id: depositTxHash});
+  return dbClient.db().collection("deposits").findOne({ _id: depositTxHash });
   //return deposits[depositTxHash];
 };
 
