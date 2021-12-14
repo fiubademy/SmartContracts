@@ -6,6 +6,8 @@ name: Deployment
 on:
   push:
     branches: main
+  pull_request:
+    branches: main
 
 jobs:
   deploy:
@@ -26,7 +28,7 @@ jobs:
         run: >
           git config --global url."https://github.com/".insteadOf
           ssh://git@github.com/
-      - run: npm ci
+      - run: npm install
       - name: Deploy
         env:
           INFURA_API_KEY: ${{secrets.INFURA_API_KEY}}
