@@ -32,7 +32,7 @@ routes.forEach(route => fastify.route(route({ config, services })));
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(process.env.PORT || 8010);
+    await fastify.listen(process.env.PORT || 8010, '0.0.0.0');
     await startClientDB();
     fastify.log.info(`server listening on ${fastify.server.address().port}`);
   } catch (err) {
