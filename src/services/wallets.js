@@ -1,7 +1,7 @@
 const ethers = require("ethers");
 const dbClient = require("../database.js").db;
 
-const INITIAL_GIFT_AMOUNT = 0.0001;
+const INITIAL_GIFT_AMOUNT = 0.001;
 
 const getDeployerWallet = ({ config }) => () => {
   const provider = new ethers.providers.InfuraProvider(config.network, config.infuraApiKey);
