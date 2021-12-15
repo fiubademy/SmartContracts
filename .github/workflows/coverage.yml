@@ -29,9 +29,13 @@ jobs:
         run: >
           git config --global url."https://github.com/".insteadOf
           ssh://git@github.com/
-      - run: npm ci
+      - run: npm install
       - run: npm run coverage
       - uses: codecov/codecov-action@v1
         with:
           file: ./coverage.json
           fail_ci_if_error: true
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
