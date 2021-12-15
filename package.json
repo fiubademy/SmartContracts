@@ -126,7 +126,7 @@
     "test": "hardhat test",
     "deploy-kovan": "hardhat deploy --network kovan",
     "deploy-local": "hardhat deploy --network hardhat",
-    "start": "node src/server",
+    "start": "node --optimize_for_size --max_old_space_size=460 src/server",
     "release": "standard-version"
   },
   "engines": {
