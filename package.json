@@ -27,6 +27,7 @@
     "ethereum-waffle": "3.2.0",
     "ethers": "5.0.24",
     "fastify": "3.14.2",
+    "fastify-cors": "^6.0.2",
     "fastify-swagger": "^4.12.6",
     "fs-extra": "9.0.1",
     "hardhat": "2.0.6",
