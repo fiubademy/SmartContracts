@@ -3,9 +3,6 @@ function schema() {
     body: {
       type: "object",
       properties: {
-        senderId: {
-          type: "string",
-        },
         amountInEthers: {
           type: "number",
         },
@@ -17,10 +14,7 @@ function schema() {
 
 function handler({ contractInteraction, walletService }) {
   return async function (req) {
-    return contractInteraction.deposit(
-      await walletService.getWallet(req.body.senderId),
-      req.body.amountInEthers.toString(),
-    );
+    return contractInteraction.depositFromOwner(req.body.amountInEthers.toString());
   };
 }
 
