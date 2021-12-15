@@ -19,7 +19,7 @@ fastify.register(require("fastify-swagger"), {
       url: "https://swagger.io",
       description: "Find more info here",
     },
-    host: "localhost:"+(process.env.PORT || 8010),
+    host: "localhost:" + (process.env.PORT || 8010),
     schemes: ["http", "https"],
     consumes: ["application/json"],
     produces: ["application/json"],
@@ -29,7 +29,8 @@ fastify.register(require("fastify-swagger"), {
 // Declares routes
 fastify.register(require("fastify-cors"), {
   origin: "*",
-  methods: ["*"]
+  methods: ["*"],
+  headers: ["*"],
 });
 
 routes.forEach(route => fastify.route(route({ config, services })));
@@ -37,7 +38,7 @@ routes.forEach(route => fastify.route(route({ config, services })));
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(process.env.PORT || 8010, '0.0.0.0');
+    await fastify.listen(process.env.PORT || 8010, "0.0.0.0");
     await startClientDB();
     fastify.log.info(`server listening on ${fastify.server.address().port}`);
   } catch (err) {
