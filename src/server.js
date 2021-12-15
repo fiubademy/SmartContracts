@@ -19,7 +19,7 @@ fastify.register(require("fastify-swagger"), {
       url: "https://swagger.io",
       description: "Find more info here",
     },
-    host: "localhost:8010",
+    host: "localhost:"+(process.env.PORT || 8010),
     schemes: ["http", "https"],
     consumes: ["application/json"],
     produces: ["application/json"],
