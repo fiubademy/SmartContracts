@@ -5,6 +5,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fastify-swagger": "^4.12.6",
+    "hardhat": "2.0.6",
+    "hardhat-deploy": "0.7.4",
+    "hardhat-deploy-ethers": "0.3.0-beta.7",
+    "mongodb": "^4.2.2",
+    "solc": "0.7.4",
     "@commitlint/cli": "9.1.2",
     "@commitlint/config-conventional": "12.0.1",
     "@ethersproject/abstract-signer": "5.0.6",
