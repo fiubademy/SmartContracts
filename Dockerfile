@@ -1,15 +1,13 @@
 FROM ubuntu
-WORKDIR /app
-RUN apt-get -y update 
-RUN apt-get -y upgrade
+RUN apt-get -y update
+RUN apt-get -y install curl
+RUN apt-get -y install git
+RUN apt-get -y install bash
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
 RUN apt-get -y install nodejs
-RUN apt-get install npm
-COPY package-lock.json /app/
-COPY package.json /app/
-RUN npm install
+WORKDIR /
+COPY . .
 EXPOSE 8010
-COPY .env /app/
-COPY Commands.sh /app/
-COPY src/. /app/
+RUN npm install --save-dev hardhat || exit 0
+RUN npm install || exit 0
 CMD ./Commands.sh
-
